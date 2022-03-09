@@ -5,14 +5,19 @@ import {
   StyleSheet,
   TextInput,
   Platform,
-  FlatList
+  FlatList,
 } from 'react-native';
 import {Button} from '../components/Button';
 import {SkillCard} from '../components/SkillCard';
 
+interface SkillData {
+  id: string;
+  name: string;
+}
+
 export function Home() {
   const [newSkill, setNewSkill] = useState('');
-  const [mySkills, setMySkills] = useState([]);
+  const [mySkills, setMySkills] = useState<SkillData[]>([]);
   const [greetting, setGreatting] = useState('');
 
   useEffect(() => {
@@ -27,7 +32,12 @@ export function Home() {
   }, [mySkills]);
 
   function handleAddSkill() {
-    setMySkills(oldState => [...oldState, newSkill]);
+    const data = {
+      id: String(new Date().getTime()),
+      name: newSkill,
+    };
+
+    setMySkills(oldState => [...oldState, data]);
   }
 
   return (
